@@ -10,7 +10,7 @@ dependencies:
   automated_testing_framework_models: '^2.0.10+8'
   child_builder: '^2.0.1'
   convert: '^3.1.1'
-  device_info_plus: '^8.2.2'
+  device_info_plus: '10.1.0'
   flutter:
     sdk: 'flutter'
   flutter_markdown: '^0.6.14'
