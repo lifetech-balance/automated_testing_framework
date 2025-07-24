@@ -120,6 +120,20 @@ class _AvailableTestsPageState extends State<AvailableTestsPage>
     }
   }
 
+  /// Toggles the active state of all tests on the current page (all tests or selected test suite).
+  void toggleAllTests() {
+    final targetTests = _tests?.where((test) => _suiteName == null || _suiteName == test.suiteName).toList() ?? [];
+    final allActive = targetTests.every((test) => _isActive(test));
+
+    for (var test in targetTests) {
+      _active[test.id] = !allActive;
+    }
+
+    if (mounted == true) {
+      setState(() {});
+    }
+  }
+
   void setSuiteName(String suiteName) {
     _suiteName = suiteName;
     if (mounted == true) {
@@ -224,9 +238,14 @@ class _AvailableTestsPageState extends State<AvailableTestsPage>
                   );
                 },
               ),
+              //TODO: select all tests on a page
+              Switch.adaptive(
+                onChanged: (_) => toggleAllTests(),
+                value: _tests?.where((test) => _suiteName == null || _suiteName == test.suiteName).every((test) => _isActive(test)) ?? false,
+              ),
               IconButton(
                 icon: const Icon(
-                  Icons.play_circle_filled,
+                  Icons.play_circle_filled, color: Colors.green
                 ),
                 onPressed:
                     _tests?.isNotEmpty == true ? () => _runTests() : null,
